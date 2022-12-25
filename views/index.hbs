@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
+    <title>Main</title>
+</head>
+<body>
+    <div id="menu">
+        <img src="./menu.png" id="menuIMG">
+        <div id="ShowOnHover">
+            <p><a href="https://www.instagram.com/benediktinergymnasiumettal/" target="_blank">Instagram</a></p>
+            <p><a href="https://www.kloster-ettal.de/campus-ettal/gymnasium/" target="_blank">Gymnasium</a></p>
+            <p><a href="https://www.kloster-ettal.de/" target="_blank">Kloster Ettal</a></p>
+            <p><a href="/login/">Login</a></p>
+        </div>
+    </div>
+    <h1 id="Title">Benediktinergymnasium Ettal</h1>
+    <div id="Plan">
+        <div id="Date"></div>
+        <table id="PlanTable">
+            <thead>
+                <tr id="TableHead">
+                    <th class="PlanTableContent">Klasse</th>
+                    <th>|</th>
+                    <th class="PlanTableContent">Lehrer</th>
+                    <th>|</th>
+                    <th class="PlanTableContent">Stunde</th>
+                    <th>|</th>
+                    <th class="PlanTableContent">Vertretung</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr id="PlanData">
+                        <td  id="Klasse">
+                            
+                        </td>
+                        <td></td>
+                        <td id="Lehrer">
+                            
+                        </td>
+                        <td></td>
+                        <td id="Stunde">
+                            
+                        </td>
+                        <td></td>
+                        <td id="Vertretung">
+                            
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script>
+    const Plan = document.getElementById('Plan');
+
+    const Class = document.getElementById('Klasse');
+    const Teacher = document.getElementById('Lehrer');
+    const Hour = document.getElementById('Stunde');
+    const Replacement = document.getElementById('Vertretung');
+    const PlanTableDate = document.getElementById('Date');
+
+    var ListData = [];
+
+    fetch('/data/').then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        var JSONdata = JSON.parse(data);
+        ListData = JSONdata
+        console.log(data)
+        console.log(ListData)
+    }).then(() => {
+        ListData.forEach(function(element) {
+            console.log(element.Lehrer);
+            console.log(element.Stunde);
+            console.log(element.Klasse);
+            console.log(element.Vertretung);
+
+            var p = document.createElement("p");
+            p.appendChild(document.createTextNode(element.Lehrer))
+            Teacher.appendChild(p)
+            
+            var p2 = document.createElement("p");
+            p2.appendChild(document.createTextNode(element.Klasse))
+            Class.appendChild(p2)
+            
+            var p3 = document.createElement("p");
+            p3.appendChild(document.createTextNode(element.Vertretung))
+            Replacement.appendChild(p3)
+
+            var p4 = document.createElement("p");
+            p4.appendChild(document.createTextNode(element.Stunde))
+            Hour.appendChild(p4)
+        });
+    });
+
+    fetch('/data/date/').then((response) => response.json()).then((data) => {
+        console.log(data);
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode(data));
+        PlanTableDate.appendChild(p)
+    })
+
+</script>
+</html>

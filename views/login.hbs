@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body>
+    <div id="Login">
+        <h1>Login | Anmelden</h1>
+        <input type="text" id="User" name="user" placeholder="Nutztername" class="InnerLogin">
+        <br>
+        <input type="password" id="Password" name="password" placeholder="Passwort" class="InnerLogin">
+        <br>
+        <button onclick="Login()" class="InnerLogin">Login | Anmelden</button>
+    </div>
+</body>
+<script>
+
+const UserInput = document.getElementById('User');
+const PasswordInput = document.getElementById('Password');
+
+    function Login() {
+        console.log(UserInput.value);
+        console.log(PasswordInput.value);
+
+        var Password = PasswordInput.value;
+        var User = UserInput.value;
+
+        fetch('/login/check/admin/', {
+             headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+        },
+            method: 'POST',
+            body: JSON.stringify({"Pass": Password, "User": User})
+        }).then((response) => response.json()).then((data) => {
+            console.log(data);
+            if(data == '[{"err002"}]')
+            {
+                alert('Wrong Password or Username | Falsches Passwort oder Falcher Nutztername');
+            }
+            else {
+                const Unwanted = [']', '{', '}', '"'];
+                var newData;
+
+                newData = data.replace('[', '');
+                newData = newData.replace('"', '');
+
+                Unwanted.forEach(function(element) {
+                    newData = newData.replace(element, '');
+                })
+
+                setTimeout(function() {
+                    window.location.href = `/admin/${newData}`;
+                }, 1000);
+            }
+        });
+    }
+
+</script>
+</html>

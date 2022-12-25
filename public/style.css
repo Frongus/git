@@ -1,0 +1,202 @@
+:root {
+    --BackgroundColor: #BF40BF;
+    --BackgroundColorHover: #642064;
+    --BackgroundColor2: #191919;
+    --BackgroundColor3: #333333;
+    --BackgroundColor4: #111111;
+    --BorderColor: white;
+    --TextColor: #ffffff;
+    --LinkHoverColor: #353535;
+    --LinHoverColor2: #080808;
+}
+
+*{
+    text-decoration: none;
+    color: white;
+    font-family: 'Cabin', sans-serif;
+}
+
+body {
+    background-color: var(--BackgroundColor2);
+}
+
+a {
+    transition: all ease-in-out 0.3s;
+}
+
+input {
+    background-color: var(--BackgroundColor3);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+button {
+    transition: all ease-in-out 0.3s;
+    background-color: var(--BackgroundColor3);
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: var(--BackgroundColor4);
+}
+
+a:hover {
+    color: var(--LinkHoverColor);
+}
+
+#Title {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    transition: all ease-in-out 0.3s;
+}
+
+#Title:hover {
+    background-color: var(--BackgroundColorHover);
+    background-color: var(--BackgroundColor);
+    padding: 10px;
+    position: absolute;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#Plan {
+    border: solid var(--BorderColor) 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    padding: 20px;
+}
+
+.PlanTableContent {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#PlanData {
+    text-align: center;
+}
+
+#TableHead {
+    font-size: 20px;
+}
+
+#Date {
+    text-align: center;
+    transition: all ease-in-out 0.3s;
+}
+
+#Date:hover {
+    background-color: var(--BackgroundColor);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#menu {
+    transition: all ease-in-out 0.3s;
+    position: absolute;
+    z-index: 20;
+}
+
+#menu:hover {
+    background-color: var(--BackgroundColor3);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: scale(1.001);
+}
+
+#menu:hover #ShowOnHover
+{
+    display: block;
+}
+
+#ShowOnHover {
+    transition: all ease-in-out 0.3s;
+    display: none;
+    padding-right: 100px;
+}
+
+#menuIMG {
+    filter: opacity(0.5) drop-shadow(0 0 0 white);
+}
+
+#Login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--BackgroundColor4);
+    padding: 50px;
+    text-align: center;
+    display: block;
+}
+
+.InnerLogin {
+    margin: 20px;
+    padding: 10px;
+}
+
+#PlanPreview {
+    border: solid var(--BorderColor) 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    padding: 20px;
+}
+
+#AddBtn {
+    padding: 10px;
+}
+
+#closeIMG {
+    filter: opacity(0.5) drop-shadow(0 0 0 white);
+    transition: all ease-in-out 0.3s;
+}
+
+#closeIMG:hover {
+    background-color: var(--BackgroundColor3);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: scale(1.001);
+}
+
+#SubmitBtn {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+#openIMG {
+    position: absolute;
+    filter: opacity(0.5) drop-shadow(0 0 0 white);
+    transition: all ease-in-out 0.3s;
+    float: right;
+}
+
+#openIMG:hover {
+    background-color: var(--BackgroundColor3);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: scale(1.001);
+}
+
+#DropDownLoad {
+    display: none;
+    transition: all ease-in-out 0.3s;
+}
+
+#openIMG:hover #DropDownLoad {
+    display:block;
+}
+
+#LoadLastBtn {
+    padding: 5px;
+    margin: 5px;
+    display: block;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "stundenplan",
+  "version": "0.0.1",
+  "description": "plan",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "nodemon index.js"
+  },
+  "author": "georg gürster",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "nodemon": "^2.0.20",
+    "uuid": "^9.0.0"
+  }
+}

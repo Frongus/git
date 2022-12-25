@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
+    <title>Admin Panel | Administator Dashboard</title>
+</head>
+<body>
+    <img src="/close.png" id="closeIMG" onclick="BackToIndex()">
+    <div id="menu">
+        <img src="/open.png" id="menuIMG">
+        <div id="ShowOnHover">
+            <button onclick="LoadLast()" id="LoadLastBtn">Letzten Plan laden | Load last plan</button>
+            <button onclick="SavePlan()" id="LoadLastBtn">Diesen Plan speichern | Save current plan</button>
+            <button onclick="Reset()" id="LoadLastBtn">Zurücksetzten | Reset</button>
+        </div>
+    </div>
+    <div id="PlanPreview">
+        <div id="Date"></div>
+        <table id="PlanTable">
+            <thead>
+                <tr id="TableHead">
+                    <th class="PlanTableContent">Klasse</th>
+                    <th>|</th>
+                    <th class="PlanTableContent">Lehrer</th>
+                    <th>|</th>
+                    <th class="PlanTableContent">Stunde</th>
+                    <th>|</th>
+                    <th class="PlanTableContent">Vertretung</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr id="PlanData">
+                        <td  id="Klasse">
+                            
+                        </td>
+                        <td></td>
+                        <td id="Lehrer">
+                            
+                        </td>
+                        <td></td>
+                        <td id="Stunde">
+                            
+                        </td>
+                        <td></td>
+                        <td id="Vertretung">
+                            
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="Add">
+        <input type="text" placeholder="Klasse" id="ClassInput" required/>
+        <input type="text" placeholder="Lehrer" id="TeacherInput" required/>
+        <input type="text" placeholder="Stunde" id="HourInput" required/>
+        <input type="text" placeholder="Vertretung" id="ReplacementInput" required/>
+        <button onclick="AddToPlan()" id="AddBtn">Add | Hinzufügen</button>
+        <br>
+        <button onclick="SubmitData()" id="SubmitBtn">Submit | Anwenden</button>
+    </div>
+    </div>
+</body>
+<script>
+    const Class = document.getElementById('Klasse');
+    const Teacher = document.getElementById('Lehrer');
+    const Hour = document.getElementById('Stunde');
+    const Replacement = document.getElementById('Vertretung');
+    const PlanTableDate = document.getElementById('Date');
+
+    var ClassArr = [];
+    var TeacherArr = [];
+    var ReplacementArr = [];
+    var HourArr = [];
+
+        function AddToPlan() {
+            var ClassData = document.getElementById('ClassInput')
+            var TeacherData = document.getElementById('TeacherInput');
+            var HourData = document.getElementById('HourInput');
+            var ReplacementData = document.getElementById('ReplacementInput');
+
+            if(ClassData.value == '') {
+                alert('Alle Felder müssen ausgefüllt sein | All input fields must be filled out');
+                return false;
+            }
+            else if(TeacherData.value == '') {
+                alert('Alle Felder müssen ausgefüllt sein | All input fields must be filled out');
+                return false;
+            }
+            else if(HourData.value == '') {
+                alert('Alle Felder müssen ausgefüllt sein | All input fields must be filled out');
+                return false;
+            }
+            else if(ReplacementData.value == '') {
+                alert('Alle Felder müssen ausgefüllt sein | All input fields must be filled out');
+                return false;
+            }
+
+            console.log(ClassData.value);
+            console.log(TeacherData.value);
+            console.log(HourData.value);
+            console.log(ReplacementData.value);
+
+            ClassArr.push(ClassData.value);
+            TeacherArr.push(TeacherData.value);
+            HourArr.push(HourData.value);
+            ReplacementArr.push(ReplacementData.value);
+
+            var p = document.createElement("p");
+            p.appendChild(document.createTextNode(TeacherData.value))
+            Teacher.appendChild(p)
+                
+            var p2 = document.createElement("p");
+            p2.appendChild(document.createTextNode(ClassData.value))
+            Class.appendChild(p2)
+                
+            var p3 = document.createElement("p");
+            p3.appendChild(document.createTextNode(ReplacementData.value))
+            Replacement.appendChild(p3)
+
+            var p4 = document.createElement("p");
+            p4.appendChild(document.createTextNode(HourData.value))
+            Hour.appendChild(p4)
+
+            ClassData.value = "";
+            TeacherData.value = "";
+            ReplacementData.value = "";
+            HourData.value = "";
+        }
+
+        function BackToIndex() {
+            	window.location.href = `/`;
+        }
+
+        function SubmitData() {
+            console.log(ClassArr);
+            console.log(TeacherArr);
+            console.log(HourArr);
+            console.log(ReplacementArr);
+
+            fetch('/data/submit/Stunde', {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({HourArr})
+            }).then((response) => response.json()).then((data) => {
+                console.log(data);
+            }).then(() => {
+                fetch('/data/submit/Vertretung', {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ReplacementArr})
+            }).then((response) => response.json()).then((data) => {
+                console.log(data);
+            }).then(() => {
+                 fetch('/data/submit/Klasse', {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ClassArr})
+            }).then((response) => response.json()).then((data) => {
+                console.log(data);
+            }).then(() => {
+                fetch('/data/submit/Lehrer', {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({TeacherArr})
+            }).then((response) => response.json()).then((data) => {
+                console.log(data);
+            }).then(() => {
+                fetch('/data/process/').then((response) => response.json()).then((data) => {
+                console.log(data);
+                if(data == "[{ok00}]") {
+                    alert('Plan wurde Aktualisiert | Plan has been updated');
+                }
+                else {
+                    alert('Etwas ist schiefgelaufen | Something went wrong'); 
+                }
+            }).then(() => {
+                fetch('/data/save/').then((response) => response.json()).then((data) => {
+                console.log(data);
+            })
+            })
+            })
+            })
+            })
+            })
+        }
+
+        function LoadLast() {
+            if(confirm('Letzter Plan wird geladen, diese Aktion ist nicht umkehrbar | Last plan is going to be loaded, this action is not reversable') == true) {
+                alert('Letzter Plan wird geladen | Last plan is being loaded');
+                RenderPlan();
+            }
+            else {
+                alert('Aktion wurde abgebrochen | Action was canceled');
+            }
+            function RenderPlan() {
+                var Stunde = JSON.parse(localStorage.getItem("Stunde"));
+                var Klasse = JSON.parse(localStorage.getItem("Klasse"));
+                var Lehrer = JSON.parse(localStorage.getItem("Lehrer"));
+                var Vertretung = JSON.parse(localStorage.getItem("Vertretung"));
+
+                console.log(Stunde);
+
+                const Class = document.getElementById('Klasse');
+                const Teacher = document.getElementById('Lehrer');
+                const Hour = document.getElementById('Stunde');
+                const Replacement = document.getElementById('Vertretung');
+
+                Lehrer.forEach(function(element) {
+                    TeacherArr.push(element);
+                    var p = document.createElement("p");
+                    p.appendChild(document.createTextNode(element))
+                    Teacher.appendChild(p)
+                });
+
+                Klasse.forEach(function(element2) {
+                    ClassArr.push(element2);
+                    var p2 = document.createElement("p");
+                    p2.appendChild(document.createTextNode(element2))
+                    Class.appendChild(p2)
+                });
+
+                Vertretung.forEach(function(element3) {
+                    ReplacementArr.push(element3);
+                    var p3 = document.createElement("p");
+                    p3.appendChild(document.createTextNode(element3))
+                    Replacement.appendChild(p3)
+                });
+
+                Stunde.forEach(function(element4) {
+                    HourArr.push(element4);
+                    var p4 = document.createElement("p");
+                    p4.appendChild(document.createTextNode(element4))
+                    Hour.appendChild(p4)
+                })
+            }
+        }
+
+        function SavePlan() {
+            localStorage.setItem("Stunde", JSON.stringify(HourArr));
+            localStorage.setItem("Klasse", JSON.stringify(ClassArr));
+            localStorage.setItem("Lehrer", JSON.stringify(TeacherArr));
+            localStorage.setItem("Vertretung", JSON.stringify(ReplacementArr));
+            alert('Plan wurde local gespeichert | Plan has been saved localy');
+        }
+
+        function Reset() {
+            localStorage.clear();
+            window.location.reload();
+            fetch('/data/clear/').then((response) => response.json()).then((data) => {
+                console.log(data);
+            })
+        }
+
+        fetch('/data/get/old/').then((response) => response.json()).then((data) => {
+            console.log(data);
+            var ListData = JSON.parse(data);
+
+                ListData.forEach(function(element) {
+                    console.log(element.Lehrer);
+                    console.log(element.Stunde);
+                    console.log(element.Klasse);
+                    console.log(element.Vertretung);
+
+                    ClassArr.push(element.Klasse);
+                    TeacherArr.push(element.Lehrer);
+                    ReplacementArr.push(element.Vertretung);
+                    HourArr.push(element.Stunde);
+
+                    var p = document.createElement("p");
+                    p.appendChild(document.createTextNode(element.Lehrer))
+                    Teacher.appendChild(p)
+                    
+                    var p2 = document.createElement("p");
+                    p2.appendChild(document.createTextNode(element.Klasse))
+                    Class.appendChild(p2)
+                    
+                    var p3 = document.createElement("p");
+                    p3.appendChild(document.createTextNode(element.Vertretung))
+                    Replacement.appendChild(p3)
+
+                    var p4 = document.createElement("p");
+                    p4.appendChild(document.createTextNode(element.Stunde))
+                    Hour.appendChild(p4)
+                })
+        });
+</script>
+</html>

@@ -1,0 +1,1 @@
+[{"Stunde":"w","Klasse":"w","Lehrer":"w","Vertretung":"w"},{"Stunde":"w","Klasse":"w","Lehrer":"w","Vertretung":"w"},{"Stunde":"w","Klasse":"w","Lehrer":"w","Vertretung":"w"}]
